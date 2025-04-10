@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AppleVision</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: url("static/images/banner.jpg.jpg") no-repeat center center/cover;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            margin: 1rem;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links button {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 1rem;
+            transition: ease-in 0.3s;
+        }
+
+        .nav-links button:hover,
+        .nav-links button.active {
+            background: #32cd32;
+            color: white;
+        }
+
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 120px);
+            text-align: center;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 700px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            width: 100%;
+        }
+
+        .search-bar {
+            margin-top: 1rem;
+        }
+
+        .search-bar input {
+            padding: 0.5rem;
+            width: 70%;
+            border-radius: 1rem;
+            border: 1px solid #ccc;
+        }
+
+        .search-bar button {
+            padding: 0.5rem 1rem;
+            margin-left: 0.5rem;
+            background: #32cd32;
+            border: none;
+            border-radius: 1rem;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">AppleVision</div>
+        <ul class="nav-links">
+            <li><button id="homeBtn">Home</button></li>
+            <li><button id="diagnosticBtn">Diagnostic</button></li>
+            <li><button id="aboutBtn">About</button></li>
+        </ul>
+    </nav>
+
+    <!-- Dynamic Content Area -->
+    <div id="content" class="content">
+        <!-- Will load pages here -->
+    </div>
+
+    <script>
+        const content = document.getElementById('content');
+
+        function loadPage(page) {
+            document.querySelectorAll('.nav-links button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`${page}Btn`).classList.add('active');
+
+            if (page === "home") {
+                content.innerHTML = `
+                <div class="card">
+                    <h2>Welcome to AppleVision – Your Apple Health Companion</h2>
+                    <p>Protecting Your Apple, Ensuring Your Harvest</p>
+                    <p>AppleVision is your go-to solution for detecting diseases in plants with the power of AI. Our easy-to-use app provides accurate diagnostics and timely recommendations to keep your plants healthy and thriving.</p>
+                
+
+                    <br><h3>Apple Disease Detection</h3>
+                    <p>Quickly diagnose apple diseases using our powerful AI tool. Start by clicking below:</p>
+                    <button onclick="loadPage('diagnostic')">Go to Diagnostic Apples</button>
+                </div>`;
+            } else if (page === "diagnostic") {
+                content.innerHTML = `
+                <div class="card">
+                    <h2>Apple Disease Detector</h2>
+                    <p>Simply upload a photo of your Apple and let our AI do the job.</p>
+                     <div class="upload-section">
+        <form action="/predict" method="post" enctype="multipart/form-data">
+    <h3>Upload Apples Images</h3>
+    <input type="file" name="image" id="fileInput" required>
+    <button type="submit">Predict</button>
+</form>
+
+    </div>
+                </div>`;
+            } else if (page === "about") {
+                content.innerHTML = `
+                <div class="card">
+                    <h2>Team</h2>
+                    <p><strong>Ravi Shankar Kumar</strong></p>
+                    <p>Hello! I’m Ravi Shankar Kumar, the creator of AppleVision. At 22 years old, I’m passionate about leveraging technology to make a meaningful impact. As a B.Tech student, I’ve dedicated myself to developing innovative solutions that address real-world problems.</p>
+                    <i>you can find more about me in About page - https://github.com/ravi-shankar-kr</i>
+                </div>`;
+            }
+        }
+
+        // Initial load
+        loadPage('home');
+
+        // Event Listeners
+        document.getElementById('homeBtn').addEventListener('click', () => loadPage('home'));
+        document.getElementById('diagnosticBtn').addEventListener('click', () => loadPage('diagnostic'));
+        document.getElementById('aboutBtn').addEventListener('click', () => loadPage('about'));
+    </script>
+</body>
+
+</html>
